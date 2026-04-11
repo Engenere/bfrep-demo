@@ -6,6 +6,7 @@ from brazilfiscalreport.dacce import DaCCe
 from brazilfiscalreport.dacte import Dacte
 from brazilfiscalreport.damdfe import Damdfe
 from brazilfiscalreport.danfe import Danfe
+from brazilfiscalreport.danfse import Danfse
 
 DOCUMENT_TYPES = {
     "nfeProc": ("DANFE", Danfe),
@@ -15,6 +16,7 @@ DOCUMENT_TYPES = {
     "mdfeProc": ("DAMDFE", Damdfe),
     "MDFe": ("DAMDFE", Damdfe),
     "procEventoNFe": ("DACCe", DaCCe),
+    "NFSe": ("DANFSE", Danfse),
 }
 
 st.set_page_config(
@@ -29,6 +31,7 @@ st.markdown(
     ":gray-background[**DACTE** · CT-e] "
     ":gray-background[**DAMDFE** · MDF-e] "
     ":gray-background[**DACCe** · CC-e]"
+    ":gray-background[**DANFSE** · NFS-e]"
 )
 
 uploaded_file = st.file_uploader("Envie o arquivo XML", type=["xml"])
