@@ -154,6 +154,12 @@ def danfe_options():
         "impresso na lateral esquerda, ignorando esta opção.",
     )
     opts["receipt_pos"] = RECEIPT_POSITIONS[receipt]
+    opts["carrier_receipt"] = st.toggle(
+        "Canhoto de coleta para a transportadora",
+        key="danfe_carrier_receipt",
+        help="Imprime um canhoto extra para o transportador assinar na "
+        "coleta; só tem efeito quando o XML possui transportadora.",
+    )
     opts["font_type"] = font_input("danfe")
     size = st.radio(
         "Tamanho da fonte",
@@ -462,6 +468,7 @@ def build_danfe_config(o):
             left=o["margin_left"],
         ),
         receipt_pos=danfe.ReceiptPosition[o["receipt_pos"]],
+        carrier_receipt=o["carrier_receipt"],
         decimal_config=danfe.DecimalConfig(
             price_precision=o["price_precision"],
             quantity_precision=o["quantity_precision"],
