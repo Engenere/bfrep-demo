@@ -1,4 +1,4 @@
-streamlit[pdf]>=1.56
+streamlit[pdf]>=1.65.0
 defusedxml
 # Até o DANFCe sair num release, a demo usa o main da biblioteca. Depois,
 # fixe a versão do PyPI (brazilfiscalreport[...]==X.Y.Z) e deixe o
