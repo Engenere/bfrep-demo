@@ -16,6 +16,7 @@ from defusedxml.ElementTree import fromstring as safe_fromstring
 
 from brazilfiscalreport import __version__, dacte, damdfe, danfce, danfe, danfse
 from brazilfiscalreport.dacce import DaCCe
+from streamlit_examples import EXAMPLES, EXAMPLES_BY_ID
 
 REPO_URL = "https://github.com/Engenere/BrazilFiscalReport"
 ISSUES_URL = f"{REPO_URL}/issues"
@@ -742,6 +743,71 @@ def pdf_file_name(xml_name: str) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Exemplos
+# ---------------------------------------------------------------------------
+
+SOURCES = {"upload": "📤 Enviar meus XMLs", "example": "🧪 Usar um exemplo"}
+EXAMPLE_DOCS = [d for d in DOC_ORDER if any(e.doc == d for e in EXAMPLES)]
+
+
+def init_state_from_url():
+    """Na primeira execução da sessão, abre o exemplo de ?exemplo=<id>."""
+    if "source" in st.session_state:
+        return
+    example = EXAMPLES_BY_ID.get(st.query_params.get("exemplo"))
+    if example is None:
+        st.session_state["source"] = "upload"
+        return
+    st.session_state["source"] = "example"
+    st.session_state["example_doc"] = example.doc
+    st.session_state[f"example_{example.doc}"] = example.id
+
+
+def example_picker():
+    """Seletor de documento e exemplo; retorna (nome do arquivo, XML)."""
+    st.session_state.setdefault("example_doc", EXAMPLE_DOCS[0])
+    doc = st.pills(
+        "Documento",
+        EXAMPLE_DOCS,
+        format_func=lambda d: f"{d} · {DOC_MODEL[d]}",
+        required=True,
+        key="example_doc",
+    )
+    ids = [e.id for e in EXAMPLES if e.doc == doc]
+    st.session_state.setdefault(f"example_{doc}", ids[0])
+    example = EXAMPLES_BY_ID[
+        st.pills(
+            "Exemplo",
+            ids,
+            format_func=lambda i: EXAMPLES_BY_ID[i].label,
+            required=True,
+            key=f"example_{doc}",
+        )
+    ]
+    # Mantém o endereço da página apontando para o exemplo aberto.
+    st.query_params["exemplo"] = example.id
+    # Antes da barra lateral, para os campos da CC-e nascerem preenchidos.
+    for key, value in example.emitente.items():
+        st.session_state.setdefault(f"dacce_{key}", value)
+
+    st.caption(example.description)
+    if example.tip:
+        st.info(example.tip, icon="💡")
+    raw = example.read()
+    col_btn, col_link = st.columns([1, 2], vertical_alignment="center")
+    col_btn.download_button(
+        "Baixar o XML",
+        data=raw,
+        file_name=example.file_name,
+        mime="application/xml",
+        icon=":material/download:",
+        on_click="ignore",
+    )
+    col_link.caption("🔗 O endereço desta página abre direto este exemplo.")
+    return example.file_name, raw
+
+
+# ---------------------------------------------------------------------------
 # Interface
 # ---------------------------------------------------------------------------
 
@@ -770,23 +836,35 @@ st.markdown(
     ":gray-background[**DANFSE** · NFS-e]"
 )
 
-uploads = (
-    st.file_uploader(
-        "Envie um ou mais arquivos XML",
-        type=["xml"],
-        accept_multiple_files=True,
-    )
-    or []
+init_state_from_url()
+source = st.segmented_control(
+    "Origem dos XMLs",
+    list(SOURCES),
+    format_func=SOURCES.get,
+    required=True,
+    key="source",
+    label_visibility="collapsed",
 )
 
-# Primeira passada: detecta o tipo de cada arquivo enviado.
-entries = []
-for upload in uploads:
-    raw = upload.getvalue()
-    doc, root, error = detect_document(raw)
-    entries.append(
-        {"name": upload.name, "raw": raw, "doc": doc, "root": root, "error": error}
+if source == "example":
+    files = [example_picker()]
+else:
+    st.query_params.pop("exemplo", None)
+    uploads = (
+        st.file_uploader(
+            "Envie um ou mais arquivos XML",
+            type=["xml"],
+            accept_multiple_files=True,
+        )
+        or []
     )
+    files = [(upload.name, upload.getvalue()) for upload in uploads]
+
+# Primeira passada: detecta o tipo de cada arquivo.
+entries = []
+for name, raw in files:
+    doc, root, error = detect_document(raw)
+    entries.append({"name": name, "raw": raw, "doc": doc, "root": root, "error": error})
 
 detected_docs = [d for d in DOC_ORDER if any(e["doc"] == d for e in entries)]
 
@@ -795,7 +873,10 @@ opts_by_doc = {}
 with st.sidebar:
     st.header("⚙️ Opções de geração")
     if not detected_docs:
-        st.caption("Envie um XML para configurar as opções de geração do documento.")
+        st.caption(
+            "Envie um XML ou use um exemplo para configurar as opções de "
+            "geração do documento."
+        )
     for doc in detected_docs:
         with st.expander(f"{doc} · {DOC_MODEL[doc]}", expanded=len(detected_docs) == 1):
             st.button(
