@@ -1,2 +1,2 @@
 streamlit[pdf]>=1.50
-.[dacte,damdfe,danfse]
+.[dacte,damdfe,danfse,danfce]

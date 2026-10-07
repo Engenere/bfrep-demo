@@ -1,7 +1,7 @@
 """Playground online da BrazilFiscalReport.
 
-Converte XMLs fiscais (NF-e, CT-e, MDF-e, CC-e e NFS-e nacional) em PDF,
-expondo todas as opções de geração suportadas pela biblioteca.
+Converte XMLs fiscais (NF-e, NFC-e, CT-e, MDF-e, CC-e e NFS-e nacional) em
+PDF, expondo todas as opções de geração suportadas pela biblioteca.
 """
 
 import io
@@ -14,7 +14,7 @@ import streamlit as st
 from defusedxml.common import DefusedXmlException
 from defusedxml.ElementTree import fromstring as safe_fromstring
 
-from brazilfiscalreport import __version__, dacte, damdfe, danfe, danfse
+from brazilfiscalreport import __version__, dacte, damdfe, danfce, danfe, danfse
 from brazilfiscalreport.dacce import DaCCe
 
 REPO_URL = "https://github.com/Engenere/BrazilFiscalReport"
@@ -22,6 +22,8 @@ ISSUES_URL = f"{REPO_URL}/issues"
 
 NFE_NS = "{http://www.portalfiscal.inf.br/nfe}"
 CCE_TP_EVENTO = "110110"
+# A NFC-e é a NF-e modelo 65: mesma tag raiz, distinguida pelo ide/mod.
+NFCE_MODEL = "65"
 
 IMAGE_TYPES = ["png", "jpg", "jpeg"]
 
@@ -36,10 +38,11 @@ ROOT_TAG_TO_DOC = {
     "NFSe": "DANFSE",
 }
 
-DOC_ORDER = ["DANFE", "DACTE", "DAMDFE", "DACCe", "DANFSE"]
+DOC_ORDER = ["DANFE", "DANFCe", "DACTE", "DAMDFE", "DACCe", "DANFSE"]
 
 DOC_MODEL = {
     "DANFE": "NF-e",
+    "DANFCe": "NFC-e",
     "DACTE": "CT-e",
     "DAMDFE": "MDF-e",
     "DACCe": "CC-e",
@@ -341,6 +344,93 @@ def damdfe_options():
     return opts
 
 
+DANFCE_FONTS = {"Times": "TIMES", "Helvetica": "HELVETICA", "Courier": "COURIER"}
+PAPER_WIDTHS = {"80 mm": 80, "58 mm": 58}
+
+
+def danfce_options():
+    opts = {}
+    opts["logo"] = logo_input(
+        "danfce",
+        "Imagem centralizada no topo do cupom, encaixada numa caixa de 14 mm "
+        "de altura por metade da largura da bobina.",
+    )
+
+    st.markdown("**Bobina**")
+    width = st.radio(
+        "Largura da bobina",
+        list(PAPER_WIDTHS),
+        horizontal=True,
+        key="danfce_paper_width",
+        help="80 mm e 58 mm são as larguras usuais das impressoras térmicas.",
+    )
+    opts["paper_width"] = PAPER_WIDTHS[width]
+    paginate = st.toggle(
+        "Quebrar em páginas",
+        key="danfce_paginate",
+        help="Por padrão o cupom sai numa página única com a altura do "
+        "conteúdo, como na bobina contínua. Ative para quebrá-lo em páginas "
+        "de altura fixa.",
+    )
+    height = st.number_input(
+        "Altura da página (mm)",
+        100,
+        1000,
+        300,
+        key="danfce_paper_height",
+        disabled=not paginate,
+    )
+    opts["paper_height"] = height if paginate else None
+
+    label = st.radio(
+        "Fonte",
+        list(DANFCE_FONTS),
+        horizontal=True,
+        key="danfce_font",
+        help="Família tipográfica usada em todo o documento.",
+    )
+    opts["font_type"] = DANFCE_FONTS[label]
+    opts["watermark_cancelled"] = st.toggle(
+        "Marca d'água CANCELADA",
+        key="danfce_cancelled",
+        help="O XML autorizado não indica o cancelamento; ative esta "
+        "opção para NFC-es canceladas.",
+    )
+    opts["line_break_char"] = st.text_input(
+        "Quebra de linha nas inf. complementares",
+        key="danfce_line_break_char",
+        max_chars=1,
+        placeholder=";",
+        help="Caractere que o emitente usa como quebra de linha no infCpl "
+        "(';' e '|' são os usuais). Vazio imprime o texto corrido.",
+    )
+
+    opts.update(
+        margin_inputs(
+            "danfce",
+            top=(0, 20, 2),
+            bottom=(0, 20, 2),
+            left=(0, 20, 2),
+            right=(0, 20, 2),
+        )
+    )
+
+    st.markdown("**Casas decimais**")
+    col1, col2 = st.columns(2)
+    opts["price_precision"] = col1.number_input(
+        "Valores", 0, 10, 2, key="danfce_price_precision"
+    )
+    opts["quantity_precision"] = col2.number_input(
+        "Quantidade",
+        0,
+        10,
+        2,
+        key="danfce_qty_precision",
+        help="Produtos vendidos por peso costumam exigir 3 casas.",
+    )
+    return opts
+
+
 DANFSE_FONTS = {
     "Helvetica (Arial)": "HELVETICA",
     "Times": "TIMES",
@@ -432,6 +522,7 @@ def dacce_options(cnpj_hints):
 
 SIDEBAR_BUILDERS = {
     "DANFE": danfe_options,
+    "DANFCe": danfce_options,
     "DACTE": dacte_options,
     "DAMDFE": damdfe_options,
     "DANFSE": danfse_options,
@@ -496,6 +587,27 @@ def build_danfe_config(o):
     )
 
 
+def build_danfce_config(o):
+    return danfce.DanfceConfig(
+        logo=_as_image(o["logo"]),
+        margins=danfce.Margins(
+            top=o["margin_top"],
+            right=o["margin_right"],
+            bottom=o["margin_bottom"],
+            left=o["margin_left"],
+        ),
+        decimal_config=danfce.DecimalConfig(
+            price_precision=o["price_precision"],
+            quantity_precision=o["quantity_precision"],
+        ),
+        font_type=danfce.FontType[o["font_type"]],
+        watermark_cancelled=o["watermark_cancelled"],
+        line_break_char=o["line_break_char"] or None,
+        paper_width=o["paper_width"],
+        paper_height=o["paper_height"],
+    )
+
+
 def build_dacte_config(o):
     return dacte.DacteConfig(
         logo=_as_image(o["logo"]),
@@ -548,6 +660,8 @@ def generate_pdf(raw_xml: bytes, doc_type: str, opts: dict) -> bytes:
         if opts["orientation"] != "AUTO":
             raw_xml = _force_orientation(raw_xml, opts["orientation"])
         document = danfe.Danfe(xml=raw_xml, config=build_danfe_config(opts))
+    elif doc_type == "DANFCe":
+        document = danfce.Danfce(xml=raw_xml, config=build_danfce_config(opts))
     elif doc_type == "DACTE":
         document = dacte.Dacte(xml=raw_xml, config=build_dacte_config(opts))
     elif doc_type == "DAMDFE":
@@ -592,6 +706,10 @@ def detect_document(raw: bytes):
         )
     tag = root.tag.split("}")[-1]
     doc = ROOT_TAG_TO_DOC.get(tag)
+    if doc == "DANFE":
+        element = root.find(f".//{NFE_NS}ide/{NFE_NS}mod")
+        if element is not None and (element.text or "").strip() == NFCE_MODEL:
+            doc = "DANFCe"
     if doc == "DACCe":
         element = root.find(f".//{NFE_NS}infEvento/{NFE_NS}tpEvento")
         tp_evento = (element.text or "").strip() if element is not None else ""
@@ -612,7 +730,7 @@ def detect_document(raw: bytes):
             root,
             (
                 f"Documento não reconhecido (tag raiz `<{tag}>`). São aceitos "
-                "XMLs de NF-e, CT-e, MDF-e, CC-e (evento processado) e "
+                "XMLs de NF-e, NFC-e, CT-e, MDF-e, CC-e (evento processado) e "
                 "NFS-e nacional."
             ),
         )
@@ -645,6 +763,7 @@ st.markdown("Transforme seus XMLs fiscais em PDF de forma rápida e gratuita.")
 st.markdown(
     "Documentos suportados: "
     ":gray-background[**DANFE** · NF-e] "
+    ":gray-background[**DANFCe** · NFC-e] "
     ":gray-background[**DACTE** · CT-e] "
     ":gray-background[**DAMDFE** · MDF-e] "
     ":gray-background[**DACCe** · CC-e] "
@@ -802,11 +921,17 @@ if results:
                 "Pré-visualização indisponível neste ambiente. "
                 "Use o botão de download acima."
             )
-        if preview["doc"] not in ("DACCe", "DANFSE"):
+        if preview["doc"] in ("DANFE", "DACTE", "DAMDFE"):
             st.caption(
                 "NF-e, CT-e e MDF-e de homologação ou sem protocolo "
                 'de autorização recebem a marca d\'água "SEM VALOR FISCAL" '
                 "automaticamente."
+            )
+        elif preview["doc"] == "DANFCe":
+            st.caption(
+                'NFC-e de homologação (tpAmb=2) imprime "EMITIDA EM AMBIENTE '
+                'DE HOMOLOGAÇÃO - SEM VALOR FISCAL", e NFC-e sem protocolo '
+                'de autorização imprime "Pendente de autorização".'
             )
         elif preview["doc"] == "DANFSE":
             st.caption(
