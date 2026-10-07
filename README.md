@@ -45,4 +45,4 @@ A demo instala a BrazilFiscalReport como dependência, pelo [`requirements.txt`]
 
 ## Licença
 
-[LGPL-3.0](LICENSE), a mesma da biblioteca.
+[LGPL-3.0](LICENSE).
