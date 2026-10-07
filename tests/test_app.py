@@ -57,6 +57,20 @@ def test_switching_to_upload_clears_the_example_from_the_url():
     assert not at.success
 
 
-def test_cce_example_prefills_the_issuer():
-    at = run_app(exemplo="dacce")
-    assert at.text_input(key="dacce_nome").value == "EMPRESA EXEMPLO LTDA"
+@pytest.mark.parametrize(
+    "example",
+    [example for example in EXAMPLES if example.options],
+    ids=lambda example: example.id,
+)
+def test_example_opens_with_its_options(example):
+    at = run_app(exemplo=example.id)
+    for key, value in example.options.items():
+        # get_by_key também falha se a chave não for de nenhum widget.
+        assert at.get_by_key(key).value == value, key
+
+
+def test_switching_example_resets_the_previous_options():
+    at = run_app(exemplo="danfe-anp")
+    assert at.toggle(key="danfe_anp").value is True
+    at.pills(key="example_DANFE").set_value("danfe").run()
+    assert at.toggle(key="danfe_anp").value is False

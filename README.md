@@ -37,7 +37,7 @@ Os testes abrem a demo com cada exemplo e conferem que o PDF é gerado e que o t
 ## Adicionando um exemplo
 
 1. Salve o XML em `examples/<id>.xml`, só com dados fictícios.
-2. Registre-o em `EXAMPLES`, no [`catalog.py`](catalog.py), com uma descrição curta e, se fizer sentido, a opção da barra lateral que vale testar com ele.
+2. Registre-o em `EXAMPLES`, no [`catalog.py`](catalog.py), com uma descrição curta. Se o XML existe para mostrar uma opção da barra lateral, ligue-a em `options`, pela chave do widget.
 
 ## Relação com a biblioteca
 

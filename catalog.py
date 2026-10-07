@@ -17,10 +17,9 @@ class Example:
     doc: str
     label: str
     description: str
-    # Opção da barra lateral que vale a pena testar com este XML.
-    tip: str | None = None
-    # Dados cadastrais da CC-e, que o XML do evento não traz.
-    emitente: dict = field(default_factory=dict)
+    # Valores com que a barra lateral abre neste exemplo, pela chave de cada
+    # widget: ligam as opções que mostram o que o XML tem de especial.
+    options: dict = field(default_factory=dict)
 
     @property
     def file_name(self) -> str:
@@ -41,35 +40,32 @@ EXAMPLES = [
         id="danfe-fatura",
         doc="DANFE",
         label="Fatura e transporte",
-        description="NF-e com duplicatas, transportadora, lotes e informações "
-        "complementares separadas por ';'.",
-        tip="Experimente **Canhoto de coleta para a transportadora**, "
-        "**Exibição da fatura** e **Quebrar linha em ';' nas inf. "
-        "complementares**.",
+        description="NF-e com duplicatas, transportadora e informações "
+        "complementares separadas por ';', impressa com o canhoto da "
+        "transportadora e com cada ';' virando uma quebra de linha.",
+        options={"danfe_carrier_receipt": True, "danfe_semicolon": True},
     ),
     Example(
         id="danfe-multipagina",
         doc="DANFE",
         label="Várias páginas",
         description="NF-e com 29 itens, que ocupam mais de uma página.",
-        tip="Mude a **Orientação** para Paisagem ou o **Tamanho da fonte** "
-        "para Grande.",
     ),
     Example(
         id="danfe-anp",
         doc="DANFE",
         label="Combustível (ANP)",
-        description="Item de combustível com o grupo comb (código ANP).",
-        tip="Ative **Exibir dados ANP (combustíveis)**.",
+        description="Item de combustível com o grupo comb, impresso com o "
+        "código e a descrição ANP.",
+        options={"danfe_anp": True},
     ),
     Example(
         id="danfe-anvisa",
         doc="DANFE",
         label="Medicamento (ANVISA)",
-        description="Item de medicamento com o grupo med e lotes de "
-        "rastreabilidade.",
-        tip="Ative **Exibir dados ANVISA (medicamentos)** e **Exibir lotes "
-        "(rastreabilidade)**.",
+        description="Item de medicamento com os grupos med e rastro, impresso "
+        "com o código ANVISA e os lotes.",
+        options={"danfe_anvisa": True, "danfe_branch": True},
     ),
     Example(
         id="danfce",
@@ -77,7 +73,6 @@ EXAMPLES = [
         label="Cupom autorizado",
         description="NFC-e autorizada, com três itens e consumidor "
         "identificado por CNPJ.",
-        tip="Troque a **Largura da bobina** para 58 mm.",
     ),
     Example(
         id="danfce-homologacao",
@@ -92,7 +87,6 @@ EXAMPLES = [
         label="Muitos itens",
         description="NFC-e com 36 itens. O cupom sai numa única página com a "
         "altura do conteúdo, como na bobina contínua.",
-        tip="Ative **Quebrar em páginas** para paginar o cupom.",
     ),
     Example(
         id="dacte",
@@ -110,8 +104,9 @@ EXAMPLES = [
         id="dacte-ibs-cbs",
         doc="DACTE",
         label="Reforma tributária (IBS/CBS)",
-        description="CT-e com o grupo IBSCBS da reforma tributária.",
-        tip="Ative **Exibir IBS/CBS (reforma tributária)**.",
+        description="CT-e com o grupo IBSCBS da reforma tributária, impresso "
+        "com a coluna IBS/CBS no quadro de impostos.",
+        options={"dacte_ibs_cbs": True},
     ),
     Example(
         id="dacte-multipagina",
@@ -130,8 +125,9 @@ EXAMPLES = [
         id="damdfe-municipios",
         doc="DAMDFE",
         label="Vários municípios",
-        description="MDF-e rodoviário com dois municípios de descarregamento.",
-        tip="Ative **Exibir origem/destino da prestação**.",
+        description="MDF-e rodoviário com dois municípios de descarregamento, "
+        "impresso com a origem e o destino da prestação no percurso.",
+        options={"damdfe_origem_destino": True},
     ),
     Example(
         id="damdfe-aereo",
@@ -152,13 +148,13 @@ EXAMPLES = [
         description="Evento de CC-e de uma NF-e. O XML do evento não traz os "
         "dados do emitente, por isso a barra lateral já vem preenchida com "
         "dados fictícios.",
-        emitente={
-            "nome": "EMPRESA EXEMPLO LTDA",
-            "end": "AV. EXEMPLO, 100",
-            "bairro": "CENTRO",
-            "cidade": "SÃO PAULO",
-            "uf": "SP",
-            "fone": "(11) 1234-5678",
+        options={
+            "dacce_nome": "EMPRESA EXEMPLO LTDA",
+            "dacce_end": "AV. EXEMPLO, 100",
+            "dacce_bairro": "CENTRO",
+            "dacce_cidade": "SÃO PAULO",
+            "dacce_uf": "SP",
+            "dacce_fone": "(11) 1234-5678",
         },
     ),
     Example(
@@ -166,7 +162,6 @@ EXAMPLES = [
         doc="DANFSE",
         label="Produção",
         description="NFS-e nacional emitida em produção.",
-        tip="Ative o **Canhoto de cientificação**.",
     ),
     Example(
         id="danfse-homologacao",

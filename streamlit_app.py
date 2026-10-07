@@ -782,17 +782,19 @@ def example_picker():
             format_func=lambda i: EXAMPLES_BY_ID[i].label,
             required=True,
             key=f"example_{doc}",
+            # Sem isso, a opção ligada por um exemplo seguiria ligada no
+            # próximo exemplo do mesmo documento.
+            on_change=reset_doc_options,
+            args=(doc.lower(),),
         )
     ]
     # Mantém o endereço da página apontando para o exemplo aberto.
     st.query_params["exemplo"] = example.id
-    # Antes da barra lateral, para os campos da CC-e nascerem preenchidos.
-    for key, value in example.emitente.items():
-        st.session_state.setdefault(f"dacce_{key}", value)
+    # Antes da barra lateral, para os widgets já nascerem com esses valores.
+    for key, value in example.options.items():
+        st.session_state.setdefault(key, value)
 
     st.caption(example.description)
-    if example.tip:
-        st.info(example.tip, icon="💡")
     raw = example.read()
     col_btn, col_link = st.columns([1, 2], vertical_alignment="center")
     col_btn.download_button(
