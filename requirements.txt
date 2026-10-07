@@ -1,2 +1,6 @@
 streamlit[pdf]>=1.56
-.[dacte,damdfe,danfse,danfce]
+defusedxml
+# Até o DANFCe sair num release, a demo usa o main da biblioteca. Depois,
+# fixe a versão do PyPI (brazilfiscalreport[...]==X.Y.Z) e deixe o
+# Dependabot propor os bumps.
+brazilfiscalreport[dacte,damdfe,danfse,danfce] @ git+https://github.com/Engenere/BrazilFiscalReport@main

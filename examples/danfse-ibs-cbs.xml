@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.01">
+    <infNFSe Id="NFS42046082240248250000160000000000055555555555555555">
+        <xLocEmi>Porto Alegre</xLocEmi>
+        <xLocPrestacao>São Paulo</xLocPrestacao>
+        <nNFSe>555</nNFSe>
+        <cLocIncid>3550308</cLocIncid>
+        <xLocIncid>São Paulo</xLocIncid>
+        <xTribNac>Serviços de Publicidade</xTribNac>
+        <xTribMun>Publicidade e propaganda veiculada no município</xTribMun>
+        <verAplic>SefinNacional_2.0.0</verAplic>
+        <ambGer>2</ambGer>
+        <tpEmis>1</tpEmis>
+        <procEmi>1</procEmi>
+        <cStat>102</cStat>
+        <dhProc>2027-01-20T10:00:00-03:00</dhProc>
+        <nDFSe>118000</nDFSe>
+        <emit>
+            <CNPJ>90449244000149</CNPJ>
+            <xNome>Renata e Leandro Publicidade e Propaganda ME</xNome>
+            <enderNac>
+                <xLgr>Avenida Ipiranga</xLgr>
+                <nro>500</nro>
+                <xBairro>Centro Histórico</xBairro>
+                <cMun>4314902</cMun>
+                <UF>RS</UF>
+                <CEP>90040000</CEP>
+            </enderNac>
+            <fone>5132023254</fone>
+            <email>contato@renataeleandropublicidade.com.br</email>
+        </emit>
+        <valores>
+            <vCalcDR>100.00</vCalcDR>
+            <vBC>9200.00</vBC>
+            <pAliqAplic>2.00</pAliqAplic>
+            <vISSQN>184.00</vISSQN>
+            <vTotalRet>384.00</vTotalRet>
+            <vLiq>8916.00</vLiq>
+        </valores>
+        <xOutInf>Informações de uso da administração tributária municipal</xOutInf>
+        <IBSCBS>
+            <cLocalidadeIncid>3550308</cLocalidadeIncid>
+            <xLocalidadeIncid>São Paulo</xLocalidadeIncid>
+            <valores>
+                <vBC>9040.00</vBC>
+                <vCalcReeRepRes>20.00</vCalcReeRepRes>
+                <uf>
+                    <pIBSUF>5.00</pIBSUF>
+                    <pRedAliqUF>10.00</pRedAliqUF>
+                    <pAliqEfetUF>4.50</pAliqEfetUF>
+                </uf>
+                <mun>
+                    <pIBSMun>2.00</pIBSMun>
+                    <pRedAliqMun>10.00</pRedAliqMun>
+                    <pAliqEfetMun>1.80</pAliqEfetMun>
+                </mun>
+                <fed>
+                    <pCBS>8.80</pCBS>
+                    <pRedAliqCBS>10.00</pRedAliqCBS>
+                    <pAliqEfetCBS>7.92</pAliqEfetCBS>
+                </fed>
+            </valores>
+            <totCIBS>
+                <vTotNF>10201.49</vTotNF>
+                <gIBS>
+                    <vIBSTot>569.52</vIBSTot>
+                    <gIBSUFTot>
+                        <vIBSUF>406.80</vIBSUF>
+                    </gIBSUFTot>
+                    <gIBSMunTot>
+                        <vIBSMun>162.72</vIBSMun>
+                    </gIBSMunTot>
+                </gIBS>
+                <gCBS>
+                    <vCBS>715.97</vCBS>
+                </gCBS>
+            </totCIBS>
+        </IBSCBS>
+        <DPS versao="1.00">
+            <infDPS Id="DPS431490211222333000144000010000000000000555">
+                <tpAmb>1</tpAmb>
+                <dhEmi>2027-01-20T09:00:00-03:00</dhEmi>
+                <verAplic>ERP-1.0</verAplic>
+                <serie>1</serie>
+                <nDPS>555</nDPS>
+                <dCompet>2027-01-15</dCompet>
+                <tpEmit>1</tpEmit>
+                <cLocEmi>4314902</cLocEmi>
+                <subst>
+                    <chSubstda>42046082240248250000160000000000044444444444444444</chSubstda>
+                    <cMotivo>05</cMotivo>
+                </subst>
+                <prest>
+                    <CNPJ>11222333000144</CNPJ>
+                    <IM>123456</IM>
+                    <xNome>Agência de Publicidade Exemplo Ltda</xNome>
+                    <end>
+                        <endNac>
+                            <cMun>4314902</cMun>
+                            <CEP>90040000</CEP>
+                        </endNac>
+                        <xLgr>Avenida Ipiranga</xLgr>
+                        <nro>500</nro>
+                        <xBairro>Centro Histórico</xBairro>
+                    </end>
+                    <fone>5132023254</fone>
+                    <email>contato@agenciaexemplo.com.br</email>
+                    <regTrib>
+                        <opSimpNac>1</opSimpNac>
+                        <regApTribSN>3</regApTribSN>
+                        <regEspTrib>0</regEspTrib>
+                    </regTrib>
+                </prest>
+                <toma>
+                    <CNPJ>96572806000123</CNPJ>
+                    <xNome>Bento e Silvana Doces e Salgados Ltda</xNome>
+                    <end>
+                        <endNac>
+                            <cMun>3550308</cMun>
+                            <CEP>01310100</CEP>
+                        </endNac>
+                        <xLgr>Avenida Paulista</xLgr>
+                        <nro>1000</nro>
+                        <xBairro>Bela Vista</xBairro>
+                    </end>
+                    <fone>1133334444</fone>
+                    <email>compras@bentoesilvana.com.br</email>
+                </toma>
+                <serv>
+                    <locPrest>
+                        <cLocPrestacao>3550308</cLocPrestacao>
+                    </locPrest>
+                    <cServ>
+                        <cTribNac>010501</cTribNac>
+                        <cTribMun>123</cTribMun>
+                        <xDescServ>Veiculação de campanha publicitária em mídia digital, conforme contrato 2027/001.</xDescServ>
+                        <cNBS>115011000</cNBS>
+                    </cServ>
+                    <obra>
+                        <cObra>00000000000555</cObra>
+                    </obra>
+                    <atvEvento>
+                        <xNome>Campanha de lançamento</xNome>
+                        <dtIni>2027-01-10</dtIni>
+                        <dtFim>2027-01-20</dtFim>
+                        <idAtvEvt>EVT0001</idAtvEvt>
+                    </atvEvento>
+                    <infoCompl>
+                        <idDocTec>TEC-0009</idDocTec>
+                        <docRef>DOC-2027-123</docRef>
+                        <xPed>PED-77</xPed>
+                        <gItemPed>
+                            <xItemPed>10</xItemPed>
+                        </gItemPed>
+                        <xInfComp>Pagamento via PIX em até 10 dias.</xInfComp>
+                    </infoCompl>
+                </serv>
+                <valores>
+                    <vServPrest>
+                        <vServ>9500.00</vServ>
+                    </vServPrest>
+                    <vDescCondIncond>
+                        <vDescIncond>200.00</vDescIncond>
+                        <vDescCond>100.00</vDescCond>
+                    </vDescCondIncond>
+                    <trib>
+                        <tribMun>
+                            <tribISSQN>1</tribISSQN>
+                            <tpRetISSQN>2</tpRetISSQN>
+                        </tribMun>
+                        <tribFed>
+                            <piscofins>
+                                <CST>01</CST>
+                                <vPis>10.00</vPis>
+                                <vCofins>46.00</vCofins>
+                                <tpRetPisCofins>0</tpRetPisCofins>
+                            </piscofins>
+                            <vRetIRRF>150.00</vRetIRRF>
+                            <vRetCSLL>50.00</vRetCSLL>
+                        </tribFed>
+                        <totTrib>
+                            <vTotTrib>
+                                <vTotTribFed>800.00</vTotTribFed>
+                                <vTotTribEst>0.00</vTotTribEst>
+                                <vTotTribMun>180.00</vTotTribMun>
+                            </vTotTrib>
+                        </totTrib>
+                    </trib>
+                </valores>
+                <IBSCBS>
+                    <finNFSe>0</finNFSe>
+                    <cIndOp>010101</cIndOp>
+                    <indDest>1</indDest>
+                    <dest>
+                        <NIF>987654321</NIF>
+                        <xNome>Global Services Ltd</xNome>
+                        <end>
+                            <endExt>
+                                <cPais>US</cPais>
+                                <cEndPost>10001</cEndPost>
+                                <xCidade>New York</xCidade>
+                                <xEstProvReg>NY</xEstProvReg>
+                            </endExt>
+                            <xLgr>5th Avenue</xLgr>
+                            <nro>700</nro>
+                            <xBairro>Manhattan</xBairro>
+                        </end>
+                        <fone>12125551234</fone>
+                        <email>contact@globalservices.example</email>
+                    </dest>
+                    <imovel>
+                        <inscImobFisc>IM-000321</inscImobFisc>
+                        <cCIB>1A2B3C4D</cCIB>
+                    </imovel>
+                    <valores>
+                        <trib>
+                            <gIBSCBS>
+                                <CST>000</CST>
+                                <cClassTrib>000001</cClassTrib>
+                            </gIBSCBS>
+                        </trib>
+                    </valores>
+                </IBSCBS>
+            </infDPS>
+        </DPS>
+    </infNFSe>
+    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <ds:Reference URI="#NFS42046082240248250000160000000000055555555555555555">
+                <ds:Transforms>
+                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                </ds:Transforms>
+                <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <ds:DigestValue>AAAAAAAAAAAAAAAAAAAAAAAAAAA=</ds:DigestValue>
+            </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>AAAA</ds:SignatureValue>
+        <ds:KeyInfo>
+            <ds:X509Data>
+                <ds:X509Certificate>AAAA</ds:X509Certificate>
+            </ds:X509Data>
+        </ds:KeyInfo>
+    </ds:Signature>
+</NFSe>

@@ -1,4 +1,4 @@
-"""Playground online da BrazilFiscalReport.
+"""Demo online da BrazilFiscalReport.
 
 Converte XMLs fiscais (NF-e, NFC-e, CT-e, MDF-e, CC-e e NFS-e nacional) em
 PDF, expondo todas as opções de geração suportadas pela biblioteca.
@@ -11,12 +11,12 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 import streamlit as st
+from brazilfiscalreport import __version__, dacte, damdfe, danfce, danfe, danfse
+from brazilfiscalreport.dacce import DaCCe
 from defusedxml.common import DefusedXmlException
 from defusedxml.ElementTree import fromstring as safe_fromstring
 
-from brazilfiscalreport import __version__, dacte, damdfe, danfce, danfe, danfse
-from brazilfiscalreport.dacce import DaCCe
-from streamlit_examples import EXAMPLES, EXAMPLES_BY_ID
+from catalog import EXAMPLES, EXAMPLES_BY_ID
 
 REPO_URL = "https://github.com/Engenere/BrazilFiscalReport"
 ISSUES_URL = f"{REPO_URL}/issues"

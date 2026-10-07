@@ -1,18 +1,11 @@
-"""Testes do playground Streamlit (streamlit_app.py).
-
-Precisam do Streamlit instalado (pip install -r requirements.txt); sem ele
-o módulo inteiro é ignorado.
-"""
+"""Testes da demo (streamlit_app.py), executada pelo AppTest do Streamlit."""
 
 from pathlib import Path
 
 import pytest
+from streamlit.testing.v1 import AppTest
 
-pytest.importorskip("streamlit")
-
-from streamlit.testing.v1 import AppTest  # noqa: E402
-
-from streamlit_examples import EXAMPLES  # noqa: E402
+from catalog import EXAMPLES
 
 APP = str(Path(__file__).resolve().parents[1] / "streamlit_app.py")
 # Gerar o PDF dos exemplos maiores passa do timeout padrão de 3 s.
@@ -28,7 +21,7 @@ def run_app(**query_params):
 def test_examples_have_unique_ids_and_existing_files():
     assert len({example.id for example in EXAMPLES}) == len(EXAMPLES)
     for example in EXAMPLES:
-        assert example.read().startswith(b"<"), example.path
+        assert example.read().startswith(b"<"), example.file_name
 
 
 @pytest.mark.parametrize("example", EXAMPLES, ids=lambda example: example.id)
