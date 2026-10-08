@@ -68,6 +68,22 @@ EXAMPLES = [
         options={"danfe_anvisa": True, "danfe_branch": True},
     ),
     Example(
+        id="danfe-pedido",
+        doc="DANFE",
+        label="Pedido de compra",
+        description="Item com o pedido de compra (xPed e nItemPed), impresso "
+        "na descrição do produto.",
+        options={"danfe_xped": True},
+    ),
+    Example(
+        id="danfe-ibs-cbs",
+        doc="DANFE",
+        label="Reforma tributária (IBS/CBS)",
+        description="NF-e emitida a partir de 01/12/2026 com o grupo IBSCBS "
+        "nos itens. Pela data de emissão, sai no leiaute novo da NT "
+        "2026.010.",
+    ),
+    Example(
         id="danfce",
         doc="DANFCe",
         label="Cupom autorizado",
@@ -104,8 +120,16 @@ EXAMPLES = [
         id="dacte-ibs-cbs",
         doc="DACTE",
         label="Reforma tributária (IBS/CBS)",
-        description="CT-e com o grupo IBSCBS da reforma tributária, impresso "
-        "com a coluna IBS/CBS no quadro de impostos.",
+        description="CT-e de 2027 com o grupo IBSCBS da reforma tributária, "
+        "impresso com a coluna IBS/CBS no quadro de impostos.",
+        options={"dacte_ibs_cbs": True},
+    ),
+    Example(
+        id="dacte-ibs-cbs-reducao",
+        doc="DACTE",
+        label="IBS/CBS com redução",
+        description="CT-e com redução de alíquota no IBS e na CBS (grupo "
+        "gRed): a coluna IBS/CBS mostra a alíquota efetiva.",
         options={"dacte_ibs_cbs": True},
     ),
     Example(

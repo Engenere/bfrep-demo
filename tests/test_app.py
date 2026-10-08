@@ -74,3 +74,15 @@ def test_switching_example_resets_the_previous_options():
     assert at.toggle(key="danfe_anp").value is True
     at.pills(key="example_DANFE").set_value("danfe").run()
     assert at.toggle(key="danfe_anp").value is False
+
+
+@pytest.mark.parametrize("example_id", ["danfe", "danfe-ibs-cbs"])
+@pytest.mark.parametrize(
+    "layout", ["NT 2026.010 (reforma tributária)", "MOC 7.0 (anterior)"]
+)
+def test_danfe_layout_can_be_forced(example_id, layout):
+    at = run_app(exemplo=example_id)
+    at.selectbox(key="danfe_layout").set_value(layout).run()
+    assert not at.exception
+    assert not at.error, [e.value for e in at.error]
+    assert at.success[0].value == "1 PDF gerado com sucesso!"
