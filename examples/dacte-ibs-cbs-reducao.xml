@@ -2,19 +2,19 @@
 <!-- Fixture de teste: dados ficticios, assinatura e protocolo ficticios. -->
 <cteProc xmlns="http://www.portalfiscal.inf.br/cte" versao="4.00">
     <CTe xmlns="http://www.portalfiscal.inf.br/cte">
-        <infCte Id="CTe35270211222333000181570010000015011100000018" versao="4.00">
+        <infCte Id="CTe35270311222333000181570010000015021100000027" versao="4.00">
             <ide>
                 <cUF>35</cUF>
-                <cCT>10000001</cCT>
+                <cCT>10000002</cCT>
                 <CFOP>6353</CFOP>
                 <natOp>PRESTACAO DE SERVICO DE TRANSPORTE</natOp>
                 <mod>57</mod>
                 <serie>1</serie>
-                <nCT>1501</nCT>
-                <dhEmi>2027-02-10T10:00:00-03:00</dhEmi>
+                <nCT>1502</nCT>
+                <dhEmi>2027-03-15T10:00:00-03:00</dhEmi>
                 <tpImp>1</tpImp>
                 <tpEmis>1</tpEmis>
-                <cDV>8</cDV>
+                <cDV>7</cDV>
                 <tpAmb>2</tpAmb>
                 <tpCTe>0</tpCTe>
                 <procEmi>0</procEmi>
@@ -22,7 +22,7 @@
                 <cMunEnv>3550308</cMunEnv>
                 <xMunEnv>SAO PAULO</xMunEnv>
                 <UFEnv>SP</UFEnv>
-                <modal>01</modal>
+                <modal>02</modal>
                 <tpServ>0</tpServ>
                 <cMunIni>3550308</cMunIni>
                 <xMunIni>SAO PAULO</xMunIni>
@@ -94,49 +94,58 @@
                 </enderDest>
             </dest>
             <vPrest>
-                <vTPrest>1089.00</vTPrest>
-                <vTPrestLiq>1000.00</vTPrestLiq>
-                <vRec>1089.00</vRec>
+                <vTPrest>12640.80</vTPrest>
+                <vTPrestLiq>12000.00</vTPrestLiq>
+                <vRec>12640.80</vRec>
                 <Comp>
                     <xNome>FRETE PESO</xNome>
-                    <vComp>750.00</vComp>
+                    <vComp>9000.00</vComp>
                 </Comp>
                 <Comp>
                     <xNome>FRETE VALOR</xNome>
-                    <vComp>250.00</vComp>
+                    <vComp>3000.00</vComp>
                 </Comp>
             </vPrest>
             <imp>
                 <ICMS>
-                    <ICMS00>
-                        <CST>00</CST>
-                        <vBC>1089.00</vBC>
-                        <pICMS>12.00</pICMS>
-                        <vICMS>130.68</vICMS>
-                    </ICMS00>
+                    <ICMS45>
+                        <CST>40</CST>
+                    </ICMS45>
                 </ICMS>
                 <IBSCBS>
-                    <CST>000</CST>
-                    <cClassTrib>000001</cClassTrib>
+                    <CST>200</CST>
+                    <cClassTrib>200050</cClassTrib>
                     <gIBSCBS>
-                        <vBC>1000.00</vBC>
+                        <vBC>12000.00</vBC>
                         <gIBSUF>
                             <pIBSUF>0.0500</pIBSUF>
-                            <vIBSUF>0.50</vIBSUF>
+                            <gRed>
+                                <pRedAliq>40.0000</pRedAliq>
+                                <pAliqEfet>0.0300</pAliqEfet>
+                            </gRed>
+                            <vIBSUF>3.60</vIBSUF>
                         </gIBSUF>
                         <gIBSMun>
                             <pIBSMun>0.0500</pIBSMun>
-                            <vIBSMun>0.50</vIBSMun>
+                            <gRed>
+                                <pRedAliq>40.0000</pRedAliq>
+                                <pAliqEfet>0.0300</pAliqEfet>
+                            </gRed>
+                            <vIBSMun>3.60</vIBSMun>
                         </gIBSMun>
-                        <vIBS>1.00</vIBS>
+                        <vIBS>7.20</vIBS>
                         <gCBS>
                             <!-- pCBS de 2027 hipotetico: a aliquota ainda nao foi publicada (NT CT-e 2026.004). -->
                             <pCBS>8.8000</pCBS>
-                            <vCBS>88.00</vCBS>
+                            <gRed>
+                                <pRedAliq>40.0000</pRedAliq>
+                                <pAliqEfet>5.2800</pAliqEfet>
+                            </gRed>
+                            <vCBS>633.60</vCBS>
                         </gCBS>
                     </gIBSCBS>
                 </IBSCBS>
-                <vTotDFe>1089.00</vTotDFe>
+                <vTotDFe>12640.80</vTotDFe>
             </imp>
             <infCTeNorm>
                 <infCarga>
@@ -154,9 +163,18 @@
                     </infNFe>
                 </infDoc>
                 <infModal versaoModal="4.00">
-                    <rodo>
-                        <RNTRC>12345678</RNTRC>
-                    </rodo>
+                    <aereo>
+                        <nMinu>000001502</nMinu>
+                        <nOCA>12345678901</nOCA>
+                        <dPrevAereo>2027-03-16</dPrevAereo>
+                        <natCarga>
+                            <xDime>0120X0080X0100</xDime>
+                        </natCarga>
+                        <tarifa>
+                            <CL>G</CL>
+                            <vTar>10.00</vTar>
+                        </tarifa>
+                    </aereo>
                 </infModal>
             </infCTeNorm>
         </infCte>
@@ -164,7 +182,7 @@
             <SignedInfo>
                 <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
                 <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-                <Reference URI="#CTe35270211222333000181570010000015011100000018">
+                <Reference URI="#CTe35270311222333000181570010000015021100000027">
                     <Transforms>
                         <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                         <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
@@ -185,8 +203,8 @@
         <infProt>
             <tpAmb>2</tpAmb>
             <verAplic>SVRS202610</verAplic>
-            <chCTe>35270211222333000181570010000015011100000018</chCTe>
-            <dhRecbto>2027-02-10T10:00:30-03:00</dhRecbto>
+            <chCTe>35270311222333000181570010000015021100000027</chCTe>
+            <dhRecbto>2027-03-15T10:00:30-03:00</dhRecbto>
             <nProt>135270000000001</nProt>
             <digVal>AAAAAAAAAAAAAAAAAAAAAAAAAAA=</digVal>
             <cStat>100</cStat>

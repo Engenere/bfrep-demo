@@ -58,6 +58,11 @@ ORIENTATIONS = {
 }
 RECEIPT_POSITIONS = {"Topo": "TOP", "Rodapé": "BOTTOM"}
 FONT_SIZES = {"Normal": "SMALL", "Grande": "BIG"}
+DANFE_LAYOUTS = {
+    "Automático (data de emissão)": "AUTO",
+    "NT 2026.010 (reforma tributária)": "NT_2026_010",
+    "MOC 7.0 (anterior)": "MOC_7_0",
+}
 INVOICE_DISPLAYS = {
     "Detalhamento completo": "FULL_DETAILS",
     "Somente duplicatas": "DUPLICATES_ONLY",
@@ -139,6 +144,15 @@ def danfe_options():
     )
 
     st.markdown("**Layout**")
+    layout = st.selectbox(
+        "Leiaute",
+        list(DANFE_LAYOUTS),
+        key="danfe_layout",
+        help="Automático usa o leiaute vigente na data de emissão da NF-e "
+        "(dhEmi): MOC 7.0 antes de 01/12/2026 e NT 2026.010 a partir dessa "
+        "data. As demais opções forçam o leiaute escolhido.",
+    )
+    opts["layout"] = DANFE_LAYOUTS[layout]
     orientation = st.radio(
         "Orientação",
         list(ORIENTATIONS),
@@ -227,6 +241,12 @@ def danfe_options():
         help="Exibe código ANVISA e preço máximo ao consumidor para itens "
         "de medicamentos (grupo med).",
     )
+    opts["display_xped"] = st.toggle(
+        "Exibir pedido de compra",
+        key="danfe_xped",
+        help="Exibe o pedido de compra do item (xPed e nItemPed) na "
+        "descrição do produto.",
+    )
     opts["display_additional_info"] = st.toggle(
         "Exibir inf. adicionais do item",
         value=True,
@@ -305,8 +325,8 @@ def dacte_options():
     opts["display_ibs_cbs"] = st.toggle(
         "Exibir IBS/CBS (reforma tributária)",
         key="dacte_ibs_cbs",
-        help="Adiciona a coluna IBS/CBS no quadro de impostos; exibe 0,00 "
-        "se o XML não tiver o grupo IBSCBS.",
+        help="Adiciona a coluna IBS/CBS no quadro de impostos; os valores "
+        "que o XML não tiver ficam em branco.",
     )
     opts.update(
         margin_inputs(
@@ -577,6 +597,7 @@ def build_danfe_config(o):
             display_anvisa=o["display_anvisa"],
             branch_info_prefix=o["branch_info_prefix"],
             display_additional_info=o["display_additional_info"],
+            display_xped=o["display_xped"],
         ),
         footer_stamp=danfe.FooterStamp(
             logo=_as_image(o["stamp_logo"]),
@@ -585,6 +606,7 @@ def build_danfe_config(o):
             logo_max_width=o["stamp_logo_max_width"],
             spacing=o["stamp_spacing"],
         ),
+        layout=danfe.DanfeLayout[o["layout"]],
     )
 
 
